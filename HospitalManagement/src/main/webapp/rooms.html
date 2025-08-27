@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Rooms</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 0;
+    }
+     header {
+      background: #2c3e50;
+      color: red;
+      padding: 5px;
+      text-align: center;
+    }
+    nav {
+      margin: 20px;
+    }
+    nav a {
+      text-decoration: none;
+      background: #3498db;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    nav a:hover {
+      background: #2980b9;
+    }
+    section {
+      margin: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+    }
+    h2 {
+      color: #2c3e50;
+    }
+    form input, form select {
+      padding: 8px;
+      margin: 5px 0;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      background: #27ae60;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    form button:hover {
+      background: #1e8449;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background: #3498db;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hospital Management System</h1>
+    <h3>Manage Rooms</h3>
+  </header>
+
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="patients.html">Patients</a>
+    <a href="doctors.html">Doctors</a>
+    <a href="rooms.html">Rooms</a>
+    <a href="services.html">Services</a>
+    <a href="appointments.html">Appointments</a>
+    <a href="billing.html">Billing</a>
+  </nav>
+
+  <!-- Add Room Form -->
+  
+  <!-- Room List -->
+  <section>
+    <h2>Room List</h2>
+    <table>
+      <tr>
+        <th>Room ID</th>
+        <th>Room Number</th>
+        <th>Type</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>101</td>
+        <td>General</td>
+        <td>Available</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>102</td>
+        <td>Private</td>
+        <td>Occupied</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- Update Room Status -->
+  <section>
+    <h2>Update Room Status</h2>
+    <form action="UpdateRoomServlet" method="post">
+      <label>Room ID:</label>
+      <input type="number" name="roomId" required>
+
+      <label>New Status:</label>
+      <select name="status">
+        <option value="Available">Available</option>
+        <option value="Occupied">Occupied</option>
+      </select>
+
+      <button type="submit">Update</button>
+    </form>
+  </section>
+  <section>
+    <h2>Add New Room</h2>
+    <form action="AddRoomServlet" method="post">
+      <label>Room Number:</label>
+      <input type="text" name="roomNumber" required>
+
+      <label>Room Type:</label>
+      <select name="roomType">
+        <option value="General">General</option>
+        <option value="Private">Private</option>
+        <option value="ICU">ICU</option>
+      </select>
+
+      <label>Status:</label>
+      <select name="status">
+        <option value="Available">Available</option>
+        <option value="Occupied">Occupied</option>
+      </select>
+
+      <button type="submit">Add Room</button>
+    </form>
+  </section>
+  
+</body>
+</html>

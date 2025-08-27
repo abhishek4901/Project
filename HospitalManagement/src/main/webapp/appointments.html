@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Appointments</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f6f9; margin: 0; padding: 0; }
+    header {
+      background: #2c3e50;
+      color: red;
+      padding: 5px;
+      text-align: center;
+    }
+    nav { margin: 20px; }
+    nav a { text-decoration: none; background: #3498db; color: white; padding: 10px 15px; border-radius: 5px; margin-right: 10px; }
+    nav a:hover { background: #2980b9; }
+    section { margin: 20px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0px 2px 5px rgba(0,0,0,0.2); }
+    h2 { color: #2c3e50; }
+    form input, form select { padding: 8px; margin: 5px 0; width: 10%; border: 1px solid #ccc; border-radius: 5px; }
+    form button { margin-top: 10px; padding: 10px 20px; border: none; background: #27ae60; color: white; border-radius: 5px; cursor: pointer; }
+    form button:hover { background: #1e8449; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    table, th, td { border: 1px solid #ddd; }
+    th, td { padding: 10px; text-align: left; }
+    th { background: #3498db; color: white; }
+    .message { margin-top: 10px; padding: 10px; border-radius: 5px; display: none; }
+    .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hospital Management System</h1>
+    <h3>Manage Appointments</h3>
+  </header>
+
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="patients.html">Patients</a>
+    <a href="doctors.html">Doctors</a>
+    <a href="rooms.html">Rooms</a>
+    <a href="services.html">Services</a>
+    <a href="appointments.html">Appointments</a>
+    <a href="billing.html">Billing</a>
+  </nav>
+
+  <!-- Appointment List -->
+  <section>
+    <h2>All Appointments</h2>
+    <table id="appointmentsTable">
+      <tr>
+        <th>Appointment ID</th>
+        <th>Patient ID</th>
+        <th>Doctor ID</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Reason</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td>101</td>
+        <td>1</td>
+        <td>10</td>
+        <td>2025-08-30</td>
+        <td>10:30 AM</td>
+        <td>Checkup</td>
+        <td>Scheduled</td>
+      </tr>
+      <tr>
+        <td>102</td>
+        <td>2</td>
+        <td>12</td>
+        <td>2025-09-01</td>
+        <td>02:00 PM</td>
+        <td>Follow-up</td>
+        <td>Completed</td>
+      </tr>
+    </table>
+  </section>
+
+  <section><div class = box>
+    <h2>Book New Appointment</h2>
+    <form id="appointmentForm">
+      <label>Patient ID:</label>
+      <input type="number" name="patientId" required>
+
+      <label>Doctor ID:</label>
+      <input type="number" name="doctorId" required>
+
+      <label>Date:</label>
+      <input type="date" name="appointmentDate" required>
+
+      <label>Time:</label>
+      <input type="time" name="appointmentTime" required>
+
+      <label>Reason:</label>
+      <input type="text" name="reason" required>
+
+      <button type="submit">Schedule Appointment</button>
+    </form>
+    </div>
+  </section>
+
+  <script>
+  const form = document.getElementById('appointmentForm');
+  const messageDiv = document.getElementById('message');
+  const table = document.getElementById('appointmentsTable');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent actual form submission
+
+    // Get form data
+    const patientId = form.patientId.value;
+    const doctorId = form.doctorId.value;
+    const date = form.appointmentDate.value;
+    const time = form.appointmentTime.value;
+    const reason = form.reason.value;
+
+    // Generate new appointment ID (simple increment)
+    const lastRow = table.rows[table.rows.length - 1];
+    const newId = lastRow ? parseInt(lastRow.cells[0].innerText) + 1 : 101;
+
+    // Add new row to table
+    const newRow = table.insertRow();
+    newRow.innerHTML = `
+      <td>${newId}</td>
+      <td>${patientId}</td>
+      <td>${doctorId}</td>
+      <td>${date}</td>
+      <td>${time}</td>
+      <td>${reason}</td>
+      <td>Scheduled</td>
+    `;
+
+    // Show success message in the page
+    messageDiv.style.display = 'block';
+
+    // Show popup alert
+    alert("✅ Appointment booked successfully!");
+
+    // Clear form
+    form.reset();
+
+    // Hide message after 3 seconds
+    setTimeout(() => { messageDiv.style.display = 'none'; }, 3000);
+  });
+</script>
+
+</body>
+</html>
