@@ -5,11 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hospital Management System</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
+    /* Reset + Flex layout for full height */
+    html, body {
+      height: 100%;
       margin: 0;
-      padding: 0;
+      display: flex;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+      background: url('images/img.jpg') no-repeat center center fixed;
+      background-size: cover;
     }
 
     /* Navbar */
@@ -17,13 +21,9 @@
       background: #2c3e50;
       padding: 10px 20px;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-between; /* space for logo & menu */
       align-items: center;
       color: white;
-    }
-    nav h1 {
-      margin: 0;
-      font-size: 20px;
     }
     nav ul {
       list-style: none;
@@ -35,7 +35,7 @@
       margin-left: 20px;
     }
     nav ul li a {
-      color: white;
+      color:red;
       text-decoration: none;
       font-size: 16px;
       padding: 6px 10px;
@@ -46,93 +46,70 @@
       background: #3498db;
     }
 
-    /* Page Content */
-    .container {
-      text-align: center;
-      margin-top: 80px;
-    }
-    .container h2 {
-      color: #2c3e50;
-      margin-bottom: 10px;
-    }
-    .container p {
-      color: #555;
-     
-    }
-
-    /* Background Image */
-    body {
-      background: url('https://www.shutterstock.com/image-photo/new-delhi-india-january-2019-600nw-1334706059.jpg') no-repeat center center fixed;
-      background-size: cover;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Styling for the "Book new Appointments" link */
+    /* Right Corner Appointment Button */
     .book-appointment {
-      display: inline-block;
       background-color: #3498db;
       color: red;
-      padding: 12px 24px;
-      font-size: 18px;
+      padding: 10px 18px;
+      font-size: 16px;
       font-weight: bold;
       text-decoration: none;
       border-radius: 6px;
-      margin-top: 20px;
       transition: 0.3s ease-in-out;
     }
-    .container{ display: inline-block;
-      background-color: water color;
-      color: white;
-      padding: 12px 24px;
-      font-size: 18px;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 6px;
-      margin-top: 18px;
-      margin-left:270px;
-      width:50%;
-      HEIGHT:AUTO;
-      transition: 0.3s ease-in-out;
-    }
-
     .book-appointment:hover {
       background-color: #2980b9;
-      transform: translateY(-5px);
+      transform: translateY(-3px);
     }
-
     .book-appointment:active {
       background-color: #1f5f82;
-      transform: translateY(2px);
+      transform: translateY(1px);
     }
- footer {
-  background: #1976d2;
-  color: white;
-  text-align: center;
-  padding: 20px;
-  margin-top: 40px;
-}
 
-footer a {
-  display: block;       
-  margin-top: 8px;        
-  color: rgb(128, 0, 0);       
-  text-decoration: none;
-  font-weight: bold;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
-
+    /* Main Container */
+    .container {
+      flex: 1; /* pushes footer down */
+      text-align: center;
+      margin-top: 1px;
+    }
   
+    
+    .container h1 {
+      margin-left:1100px;
+      background: green;
+      color: red;
+      padding: 10px 18px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    /* Footer */
+    footer {
+      background: #1976d2;
+      color: white;
+      text-align: center;
+      padding: 1px;
+      width: 100%;
+    }
+    footer a {
+      display: block;
+      margin-top: 0px;
+      
+      color: rgb(128, 0, 0);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
   <nav>
-   
     <ul>
         <li><a href="patients.html">Patients</a></li>
         <li><a href="doctors.html">Doctors</a></li>
@@ -142,21 +119,21 @@ footer a:hover {
         <li><a href="billing.html">Billing</a></li>
         <li><a href="about.html">About-us</a></li>
     </ul>
+    <!-- Appointment Button in Right Corner -->
+    <a href="appointments.html" class="book-appointment">Book new Appointments</a>
   </nav>
 
-  <!-- Home Content -->
+  <!-- Main Content -->
   <div class="container">
-   
-    <a href="appointments.html" class="book-appointment">Book new Appointments</a>
-     <h2>Welcome to Hospital Management System</h2>
+  
+    <h1>Emergency Contact - 112</h1>
   </div>
-     <h1>Emergency Contect - 112</h1>
+
+  <!-- Footer -->
   <footer>
-  <p>© 2025 Hospital Management System | All Rights Reserved</p>
-  <p>
-    <a href="about.html">About Us</a>
-  </p>
-</footer>
- 
+    <p>© 2025 Hospital Management System | All Rights Reserved</p>
+    <p><a href="about.html">About Us</a></p>
+  </footer>
+
 </body>
 </html>
