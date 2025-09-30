@@ -6,7 +6,9 @@ import java.util.List;
 
 public class EmployeeDAO {
  
-    public List<Employee> listAll() throws SQLException {
+    public List<Employee> listAll() throws SQLException { 
+
+     
         List<Employee> list = new ArrayList<>();
         String sql = "SELECT id, name, email, department FROM employees ORDER BY id DESC";
         try (Connection conn = Database.getConnection();
