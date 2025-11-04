@@ -3,12 +3,11 @@ package com.employee.app;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 public class EmployeeDAO {
 
-  
-    public List<Employee> listAll() throws SQLException { 
-
-     
+    // 🔹 Fetch all employees
+    public List<Employee> listAll() throws SQLException {
         List<Employee> list = new ArrayList<>();
         String sql = "SELECT id, name, email, department FROM employees ORDER BY id DESC";
         try (Connection conn = Database.getConnection();
@@ -26,6 +25,7 @@ public class EmployeeDAO {
         return list;
     }
 
+    // 🔹 Add new employee
     public int add(Employee e) throws SQLException {
         String sql = "INSERT INTO employees (name, email, department) VALUES (?, ?, ?)";
         try (Connection conn = Database.getConnection();
@@ -46,12 +46,27 @@ public class EmployeeDAO {
         throw new SQLException("Creating employee failed, no ID obtained.");
     }
 
+    // 🔹 Delete employee by ID
     public boolean deleteById(int id) throws SQLException {
         String sql = "DELETE FROM employees WHERE id = ?";
         try (Connection conn = Database.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
+        }
+    }
+
+    // 🔹 ✅ Update employee details
+    public boolean update(Employee e) throws SQLException {
+        String sql = "UPDATE employees SET name = ?, email = ?, department = ? WHERE id = ?";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, e.getName());
+            ps.setString(2, e.getEmail());
+            ps.setString(3, e.getDepartment());
+            ps.setInt(4, e.getId());
+            int updated = ps.executeUpdate();
+            return updated > 0;
         }
     }
 }

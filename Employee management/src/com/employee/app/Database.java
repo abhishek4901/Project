@@ -6,52 +6,43 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Database {
-
-    // Load configuration from environment variables or defaults
-    private static final String HOST = getEnvOrDefault("DB_HOST", "localhost");
-    private static final String PORT = getEnvOrDefault("DB_PORT", "3306");
-    private static final String DB_NAME = getEnvOrDefault("DB_NAME", "employee_mgmt");
-    private static final String USER = getEnvOrDefault("DB_USER", "root");
-    private static final String PASS = getEnvOrDefault("DB_PASS", "abhishek");
-
+    private static final String DEFAULT_HOST = getEnvOrDefault("DB_HOST", "localhost");
+    private static final String DEFAULT_PORT = getEnvOrDefault("DB_PORT", "3306");
+    private static final String DEFAULT_DB = getEnvOrDefault("DB_NAME", "employee_mgmt");
+    private static final String DEFAULT_USER = getEnvOrDefault("DB_USER", "root");
+    private static final String DEFAULT_PASS = getEnvOrDefault("DB_PASS", "abhishek");
+    
     static {
-        // Load MySQL JDBC driver
+        // Ensure the MySQL driver is loaded (useful for some environments)
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
+            // Proceed anyway; DriverManager may still locate the driver via SPI, but log for clarity
             System.err.println("MySQL JDBC Driver not found on classpath: " + e.getMessage());
         }
     }
 
     private static String getEnvOrDefault(String key, String def) {
-        String value = System.getenv(key);
-        return (value == null || value.isEmpty()) ? def : value;
+        String v = System.getenv(key);
+        return (v == null || v.isEmpty()) ? def : v;
     }
 
-    // Get connection to database (auto-create DB & tables if needed)
     public static Connection getConnection() throws SQLException {
-        String baseUrl = String.format("jdbc:mysql://%s:%s/?useSSL=false&allowPublicKeyRetrieval=true", HOST, PORT);
-
-        // Step 1: Ensure database exists
-        try (Connection conn = DriverManager.getConnection(baseUrl, USER, PASS);
-             Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS `" + DB_NAME + "`");
+        String baseUrl = String.format("jdbc:mysql://%s:%s/", DEFAULT_HOST, DEFAULT_PORT);
+        // Ensure database exists
+        try (Connection conn = DriverManager.getConnection(baseUrl + "?useSSL=false&allowPublicKeyRetrieval=true", DEFAULT_USER, DEFAULT_PASS);
+             Statement st = conn.createStatement()) {
+            st.executeUpdate("CREATE DATABASE IF NOT EXISTS `" + DEFAULT_DB + "`");
         }
-
-        // Step 2: Connect to the database
-        String dbUrl = String.format("jdbc:mysql://%s:%s/%s?useSSL=false&allowPublicKeyRetrieval=true", HOST, PORT, DB_NAME);
-        Connection connection = DriverManager.getConnection(dbUrl, USER, PASS);
-
-        // Step 3: Ensure tables exist
+        String dbUrl = baseUrl + DEFAULT_DB + "?useSSL=false&allowPublicKeyRetrieval=true";
+        Connection connection = DriverManager.getConnection(dbUrl, DEFAULT_USER, DEFAULT_PASS);
         ensureTables(connection);
-
         return connection;
     }
 
     private static void ensureTables(Connection conn) throws SQLException {
-        try (Statement stmt = conn.createStatement()) {
-            // Employees table
-            stmt.executeUpdate(
+        try (Statement st = conn.createStatement()) {
+            st.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS employees (" +
                 "id INT PRIMARY KEY AUTO_INCREMENT, " +
                 "name VARCHAR(100) NOT NULL, " +
@@ -59,21 +50,6 @@ public class Database {
                 "department VARCHAR(100) NOT NULL, " +
                 "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
                 ")"
-            );
-
-            // Users table for login
-            stmt.executeUpdate(
-                "CREATE TABLE IF NOT EXISTS users (" +
-                "id INT PRIMARY KEY AUTO_INCREMENT, " +
-                "username VARCHAR(50) NOT NULL UNIQUE, " +
-                "password VARCHAR(50) NOT NULL, " +
-                "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
-                ")"
-            );
-
-            // Optional: Insert default admin if table empty
-            stmt.executeUpdate(
-                "INSERT IGNORE INTO users (id, username, password) VALUES (1, 'admin', 'admin123')"
             );
         }
     }
