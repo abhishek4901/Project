@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.regex.Pattern;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
+import javax.swing.border.TitledBorder; 
 
 public class EmployeeManagementApp extends JFrame {
     private final JTextField nameField = new JTextField(20);
